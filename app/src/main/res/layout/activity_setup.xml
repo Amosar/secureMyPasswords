@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.securemypasswords.securemypasswords.SetupActivity"
+        android:background="@color/background_color"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_setup_lock"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/lock"
+            android:paddingTop="50dp"
+            android:contentDescription="@string/cadena"
+            />
+
+        <TextView
+            android:id="@+id/tv_setup_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setup_master_password"
+            android:textColor="@color/text_color"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_setup_passwordStrenght"
+            android:gravity="center"
+            />
+
+        <EditText
+            android:id="@+id/et_setup_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_password"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:imeActionId="6"
+            android:imeOptions="actionGo"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/et_setup_confirmpassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_password"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:imeActionId="6"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true" />
+        <Button
+            android:id="@+id/bt_setup_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:background="@color/black_grey"
+            android:text="@string/confirm"
+            android:textColor="@color/text_color"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <!--<Button
+        android:id="@+id/bt_setup_onlinceAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black"
+        android:text="@string/not_implemented"
+        android:textColor="@color/white"
+        android:textStyle="bold"/> -->
+</RelativeLayout>

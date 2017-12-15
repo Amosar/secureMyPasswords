@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.securemypasswords.securemypasswords.unlock_storage"
+    android:background="@color/background_color">
+
+    <ImageView
+        android:id="@+id/iv_unlock_lock"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@drawable/lock"
+        android:paddingTop="50dp"
+        android:contentDescription="@string/cadena"
+        />
+
+    <TextView
+        android:id="@+id/tv_unlock_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:text="@string/enter_password"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/iv_unlock_lock" />
+
+    <EditText
+        android:id="@+id/et_login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:hint="@string/prompt_password"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:imeActionId="6"
+        android:imeOptions="actionGo"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@+id/tv_unlock_text" />
+
+    <Button
+        android:id="@+id/bt_setup_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:background="@color/black_grey"
+        android:text="@string/confirm"
+        android:textColor="@color/text_color"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/et_login_password" />
+
+
+
+</android.support.constraint.ConstraintLayout>

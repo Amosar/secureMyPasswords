@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Secure My Passwords</string>
+    <string name="hello_world">Hello World</string>
+    <string name="prompt_password">Password</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="not_implemented">Not implemented yet</string>
+    <string name="error">Error ! </string>
+    <string name="title">Title</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_username">Username</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="error_invalid_username">This username is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="confirm">Confirm</string>
+    <string name="title_activity_password_list">SecureMyPasswords</string>
+    <string name="welcome_back">Welcome back</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="new_entry">New Entry</string>
+    <string name="new_group">New Group</string>
+
+    <string name="enter_password">Please enter the master password</string>
+
+    <!-- Activates -->
+    <!-- SetupActivity -->
+    <string name="tooSmall_password">tooSmall</string>
+    <string name="easy_password">easy</string>
+    <string name="medium_password">medium</string>
+    <string name="strong_password">strong</string>
+    <string name="strongest_password">strongest</string>
+    <string name="setup_master_password">Welcome\nKeep your password safe with one\nmaster protection\nPlease setup your password</string>
+
+
+    <!-- PictureDescription -->
+    <string name="cadena">cadena</string>
+
+    <!-- appBar -->
+    <string name="account">Account</string>
+    <string name="password_generator">Password Generator</string>
+    <string name="close">Close</string>
+
+    <!-- ManagePassword -->
+    <string name="managePasswordURL">URL :</string>
+    <string name="managePasswordName">Name :</string>
+    <string name="managePasswordPassword">Password :</string>
+    <string name="managePasswordNotes">Notes :</string>
+
+</resources>
