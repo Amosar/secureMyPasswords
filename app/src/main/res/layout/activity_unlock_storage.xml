@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_unlock_text" />
 
     <Button
-        android:id="@+id/bt_setup_confirm"
+        android:id="@+id/bt_unlockPassword_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

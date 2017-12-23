@@ -1,12 +1,18 @@
 package com.securemypasswords.securemypasswords.passwordListActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.securemypasswords.securemypasswords.AppRequestVariables;
+import com.securemypasswords.securemypasswords.PasswordManage;
 import com.securemypasswords.securemypasswords.R;
 import com.securemypasswords.securemypasswords.passwordsStorage.AppElements;
 import com.securemypasswords.securemypasswords.passwordsStorage.Group;
@@ -21,9 +27,11 @@ import java.util.List;
 public class PasswordListAdaptater extends RecyclerView.Adapter<PasswordListAdaptater.MyViewHolder> {
 
     private List<AppElements> elements;
+    protected PasswordListActivity passwordListActivity;
 
-    public PasswordListAdaptater(List<AppElements> elements){
+    public PasswordListAdaptater(List<AppElements> elements, PasswordListActivity activity){
         this.elements = elements;
+        passwordListActivity = activity;
     }
 
     @Override
@@ -34,14 +42,51 @@ public class PasswordListAdaptater extends RecyclerView.Adapter<PasswordListAdap
     }
 
     @Override
-    public void onBindViewHolder(PasswordListAdaptater.MyViewHolder holder, int position) {
-        AppElements appElements = elements.get(position);
+    public void onBindViewHolder(PasswordListAdaptater.MyViewHolder holder, final int position) {
+        final AppElements appElements = elements.get(position);
         if(appElements instanceof Password) {
             holder.getTypeImage().setImageResource(R.drawable.ic_unlock);
+            holder.itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    passwordListActivity.runManagePasswordActivity(appElements,position);
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener(){
+
+                @Override
+                public boolean onLongClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(passwordListActivity);
+                    builder.setTitle("Do you want to remove it?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            elements.remove(position);
+                            passwordListActivity.updateElements();
+                        }
+                    });
+                    builder.setNegativeButton("Nop", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.show();
+                    return true;
+                }
+            });
         }else if(appElements instanceof Group){
             holder.getTypeImage().setImageResource(R.drawable.ic_folder_star);
+            holder.itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    Intent intent = new Intent(passwordListActivity, PasswordListActivity.class);
+                    intent.putExtra("group",appElements);
+                }
+            });
         }
         holder.getTitle().setText(appElements.getName());
+
     }
 
     @Override

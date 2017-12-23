@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-/**
- * Created by amosar on 06/11/17.
- */
+import java.io.File;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -24,8 +22,14 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        File file = new File(getApplicationContext().getFilesDir(), "securedMyPassword.smp");
 
-        Intent intent = new Intent(this, SetupActivity.class);
+        Intent intent;
+        if(file.exists()) {
+            intent = new Intent(this, unlock_storage.class);
+        }else{
+            intent = new Intent(this, SetupActivity.class);
+        }
         startActivity(intent);
         finish();
         /*if (prefs.getBoolean("firstrun", true)) {

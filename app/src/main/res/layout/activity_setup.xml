@@ -2,13 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/background_color">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.securemypasswords.securemypasswords.SetupActivity"
-        android:background="@color/background_color"
         android:orientation="vertical">
 
         <ImageView
@@ -34,7 +33,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/et_setup_passwordStrenght"
+            android:id="@+id/et_setup_passwordStrength"
             android:gravity="center"
             />
 

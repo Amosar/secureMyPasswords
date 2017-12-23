@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FileParser {
 
@@ -19,6 +20,20 @@ public class FileParser {
 
     public FileParser() {
 
+    }
+
+    public String objectToXml(ArrayList<AppElements> elements) throws IOException {
+        ArrayList<Group> groups = new ArrayList<Group>();
+        ArrayList<Password> passwords = new ArrayList<Password>();
+        for(AppElements appElements : elements){
+            if(appElements instanceof Group){
+                groups.add((Group) appElements);
+            }else if(appElements instanceof Password){
+                passwords.add((Password) appElements);
+            }
+        }
+
+        return objectToXml(groups.toArray(new Group[0]),passwords.toArray(new Password[0]));
     }
 
     public String objectToXml(Group[] groups, Password[] passwords) throws IOException {
@@ -71,9 +86,8 @@ public class FileParser {
         xmlSerializer.endTag(null, xmlPassword);
     }
 
-    public Object[] xmlToObject(String xmlFile) throws XmlPullParserException, IOException {
-        ArrayList<Group> groups = new ArrayList<>();
-        ArrayList<Password> passwords = new ArrayList<>();
+    public ArrayList<AppElements> xmlToObject(String xmlFile) throws XmlPullParserException, IOException {
+        ArrayList<AppElements> elements = new ArrayList<>();
 
         XmlPullParserFactory xmlFactoryObject = XmlPullParserFactory.newInstance();
         xmlFactoryObject.setNamespaceAware(true);
@@ -85,7 +99,7 @@ public class FileParser {
             if (eventType == XmlPullParser.START_TAG) {
                 if(xmlParser.getName().equals(xmlGroup)){
                     Group tempGroup = new Group(xmlParser.getAttributeValue(null, "name"));
-                    groups.add(tempGroup);
+                    elements.add(tempGroup);
                     if(!xmlParser.isEmptyElementTag()){
                         groupToObject(tempGroup, xmlParser);
                     }
@@ -95,12 +109,12 @@ public class FileParser {
                     String userName = xmlParser.getAttributeValue(null,"user_name");
                     String password = xmlParser.getAttributeValue(null, "password");
                     String note = xmlParser.getAttributeValue(null,"note");
-                    passwords.add(new Password(password,name,url,userName,note));
+                    elements.add(new Password(password,name,url,userName,note));
                 }
             }
             eventType = xmlParser.next();
         }
-        return new Object[]{groups,passwords};
+        return elements;
     }
 
     private void groupToObject(Group group, XmlPullParser xpp) throws XmlPullParserException, IOException {

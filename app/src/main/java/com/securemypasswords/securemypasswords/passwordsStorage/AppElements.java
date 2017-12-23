@@ -1,10 +1,8 @@
 package com.securemypasswords.securemypasswords.passwordsStorage;
 
-/**
- * Created by amosar on 21/11/17.
- */
+import java.io.Serializable;
 
-public interface AppElements {
+public interface AppElements extends Serializable {
 
     String getName();
     void setName(String name);

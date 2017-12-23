@@ -1,14 +1,9 @@
 package com.securemypasswords.securemypasswords;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,9 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.securemypasswords.securemypasswords.passwordListActivity.PasswordListActivity;
 import com.securemypasswords.securemypasswords.passwordsStorage.FileParser;
 import com.securemypasswords.securemypasswords.secure.CryptManager;
+import com.securemypasswords.securemypasswords.secure.SetupPassword;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -54,7 +49,7 @@ public class SetupActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
 
-                if(validThePassword()) {
+                if(SetupPassword.validThePassword(mPasswordView,mConfirmPasswordView)) {
                     try {
                         initPasswordFile();
                         runPasswordListActivity();
@@ -68,14 +63,16 @@ public class SetupActivity extends AppCompatActivity {
             }
 
         };
-        TextWatcher textWatcher = getPasswordTextWatcher();
+        TextView passwordStrength = findViewById(R.id.et_setup_passwordStrength);
+        TextWatcher textWatcher = SetupPassword.getPasswordTextWatcher(getApplicationContext(),
+                mPasswordView,passwordStrength,mConfirmPasswordView);
 
         mPasswordView.addTextChangedListener(textWatcher);
         mConfirmPasswordView.setOnEditorActionListener(onEditorActionListener);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validThePassword()) {
+                if(SetupPassword.validThePassword(mPasswordView,mConfirmPasswordView)) {
                     try {
                         initPasswordFile();
                         runPasswordListActivity();
@@ -89,23 +86,6 @@ public class SetupActivity extends AppCompatActivity {
 
     }
 
-    private boolean validThePassword() {
-        final String password = (mPasswordView).getText().toString();
-        final String confirmPassword = (mConfirmPasswordView).getText().toString();
-        boolean cancel = false;
-        if(password.length() < 6 || getRating(password)<1){
-            mPasswordView.setError("The password is to small");
-            mPasswordView.requestFocus();
-            cancel = true;
-        }else if(!password.equals(confirmPassword)){
-            mPasswordView.setError("The two password does not match");
-            mConfirmPasswordView.setError("The two password does not match");
-            mConfirmPasswordView.requestFocus();
-            cancel = true;
-        }
-        return !cancel;
-        /*return */
-    }
 
     private void initPasswordFile() throws IOException{
         File file = new File(getApplicationContext().getFilesDir(), "securedMyPassword.smp");
@@ -154,105 +134,5 @@ public class SetupActivity extends AppCompatActivity {
         intent.putExtra("PASSWORD", mPasswordView.getText().toString());
         startActivity(intent);
         finish();
-    }
-
-    @NonNull
-    private TextWatcher getPasswordTextWatcher() {
-        return new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-                    if (_ignore)
-                        return;
-
-                    _ignore = true; // prevent infinite loop
-
-                    // Reset errors.
-                    mPasswordView.setError(null);
-                    mConfirmPasswordView.setError(null);
-
-                    String passwordText = s.toString();
-                    TextView passwordStrength = findViewById(R.id.et_setup_passwordStrenght);
-
-                    if (s.length() < 6 || getRating(passwordText) == 0) {
-                        passwordStrength.setText(R.string.tooSmall_password);
-                        passwordStrength.setTextColor(getResources().getColor(R.color.EASY));
-                        if(Build.VERSION.SDK_INT >= 21) {
-                            changeBackGroundTint(mPasswordView, getResources().getColor(R.color.EASY));
-                        }
-                    } else if (getRating(passwordText) == 1) {
-                        passwordStrength.setText(R.string.medium_password);
-                        passwordStrength.setTextColor(getResources().getColor(R.color.EASY));
-                        if(Build.VERSION.SDK_INT >= 21) {
-                            changeBackGroundTint(mPasswordView, getResources().getColor(R.color.EASY));
-                        }
-                    } else if (getRating(passwordText) == 2) {
-                        passwordStrength.setText(R.string.medium_password);
-                        passwordStrength.setTextColor(getResources().getColor(R.color.MEDIUM));
-                        if(Build.VERSION.SDK_INT >= 21) {
-                            changeBackGroundTint(mPasswordView, getResources().getColor(R.color.MEDIUM));
-                        }
-                    } else if (getRating(passwordText) == 3) {
-                        passwordStrength.setText(R.string.strong_password);
-                        passwordStrength.setTextColor(getResources().getColor(R.color.STRONG));
-                        if(Build.VERSION.SDK_INT >= 21) {
-                            changeBackGroundTint(mPasswordView, getResources().getColor(R.color.STRONG));
-                        }
-                    } else {
-                        passwordStrength.setText(R.string.strongest_password);
-                        passwordStrength.setTextColor(getResources().getColor(R.color.STRONGEST));
-                        if(Build.VERSION.SDK_INT >= 21) {
-                            changeBackGroundTint(mPasswordView, getResources().getColor(R.color.STRONGEST));
-                        }
-                    }
-                    _ignore = false; // release, so the TextWatcher start to listen again.
-                }
-
-                boolean _ignore = false; // indicates if the change was made by the TextWatcher itself.
-            };
-    }
-
-    @TargetApi(21)
-    private void changeBackGroundTint(EditText password, int Color){
-        password.setBackgroundTintList(ColorStateList.valueOf(Color));
-    }
-
-
-    private float getRating(String password) throws IllegalArgumentException {
-        if (password == null) {throw new IllegalArgumentException();}
-        int passwordStrength = 0;
-        if (password.length() > 5) {passwordStrength++;} // minimal pw length of 6
-        if (!password.toLowerCase().equals(password)) {passwordStrength++;} // lower and upper case
-        if (password.length() > 8) {passwordStrength++;} // good pw length of 9+
-        int numDigits= getNumberDigits(password);
-        if (numDigits > 0 && numDigits != password.length()) {passwordStrength++;} // contains digits and non-digits
-        return passwordStrength;
-    }
-
-    private int getNumberDigits(String inString){
-        if (isEmpty(inString)) {
-            return 0;
-        }
-        int numDigits= 0;
-        int length= inString.length();
-        for (int i = 0; i < length; i++) {
-            if (Character.isDigit(inString.charAt(i))) {
-                numDigits++;
-            }
-        }
-        return numDigits;
-    }
-
-    private static boolean isEmpty(String inString) {
-        return inString == null || inString.length() == 0;
     }
 }
