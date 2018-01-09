@@ -2,87 +2,91 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    android:windowSoftInputMode="adjustPan">
+
+    <ScrollView
+        android:id="@+id/sv_form_setup"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.securemypasswords.securemypasswords.SetupActivity"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bt_setup_onlineAccount"
+        android:layout_alignParentTop="true">
 
-        <ImageView
-            android:id="@+id/iv_setup_lock"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:src="@drawable/lock"
-            android:paddingTop="50dp"
-            android:contentDescription="@string/cadena"
-            />
-
-        <TextView
-            android:id="@+id/tv_setup_welcome"
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/setup_master_password"
-            android:textColor="@color/text_color"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:textStyle="bold"
-            android:textSize="20sp"/>
+            android:orientation="vertical"
+            tools:context="com.securemypasswords.secureMyPasswords.SetupActivity">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/et_setup_passwordStrength"
-            android:gravity="center"
-            />
+            <ImageView
+                android:id="@+id/iv_setup_lock"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:contentDescription="@string/cadena"
+                android:paddingTop="50dp"
+                android:src="@drawable/lock" />
 
-        <EditText
-            android:id="@+id/et_setup_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/prompt_password"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:imeActionId="6"
-            android:imeOptions="actionGo"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:singleLine="true" />
+            <TextView
+                android:id="@+id/tv_setup_welcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:text="@string/setup_master_password"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/et_setup_confirmpassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/prompt_password"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:imeActionId="6"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:singleLine="true" />
-        <Button
-            android:id="@+id/bt_setup_confirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            android:background="@color/black_grey"
-            android:text="@string/confirm"
-            android:textColor="@color/text_color"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/et_setup_passwordStrength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/et_setup_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:hint="@string/prompt_password"
+                android:imeActionId="6"
+                android:imeOptions="actionGo"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true" />
 
-    <!--<Button
-        android:id="@+id/bt_setup_onlinceAccount"
+            <EditText
+                android:id="@+id/et_setup_confirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:hint="@string/prompt_confirmPassword"
+                android:imeActionId="6"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/bt_setup_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/confirm"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/bt_setup_onlineAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/black"
         android:text="@string/not_implemented"
         android:textColor="@color/white"
-        android:textStyle="bold"/> -->
+        android:textStyle="bold" />
 </RelativeLayout>

@@ -8,11 +8,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.securemypasswords.secureMyPasswords.account.LoginActivity">
+    tools:context="com.securemypasswords.secureMyPasswords.account.RegisterActivity">
 
     <!-- Login progress -->
     <ProgressBar
-        android:id="@+id/login_progress"
+        android:id="@+id/register_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:visibility="gone" />
 
     <ImageView
-        android:id="@+id/iv_login_lock"
+        android:id="@+id/iv_lock_register"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:contentDescription="@string/cadena"
@@ -28,45 +28,51 @@
         android:src="@drawable/lock" />
 
     <TextView
-        android:id="@+id/tv_login_welcomeBack"
+        android:id="@+id/tv_welcome_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingTop="20dp"
-        android:text="@string/welcome_back"
+        android:text="@string/register_msg"
         android:textColor="@color/primaryTextColor"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <ScrollView
-        android:id="@+id/sv_login_form"
+        android:id="@+id/sv_register_form"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/ll_login_form"
+            android:id="@+id/ll_register_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <EditText
-                android:id="@+id/et_email_login"
+                android:id="@+id/et_email_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/et_setup_passwordStrength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/et_password_login"
+                    android:id="@+id/et_password_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -75,27 +81,39 @@
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_confirmPassword_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_confirmPassword"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
             <!-- <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Remember login information"/>-->
 
             <Button
-                android:id="@+id/bt_confirm_login"
+                android:id="@+id/bt_confirm_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:text="@string/action_register"
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/bt_registerFrom_login"
+                android:id="@+id/bt_loginFrom_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/registerFromLogin"
+                android:text="@string/loginFromRegister"
                 android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>
