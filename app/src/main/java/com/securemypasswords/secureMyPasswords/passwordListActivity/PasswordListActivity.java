@@ -163,7 +163,7 @@ public class PasswordListActivity extends AppCompatActivity
             final Builder builder = new Builder(PasswordListActivity.this);
             builder.setTitle("Change master key");
 
-            View view = LayoutInflater.from(this).inflate(R.layout.activity_change_password, activityMainLayout, false);
+            View view = LayoutInflater.from(this).inflate(R.layout.activity_update_master_key, activityMainLayout, false);
 
             builder.setView(view);
 

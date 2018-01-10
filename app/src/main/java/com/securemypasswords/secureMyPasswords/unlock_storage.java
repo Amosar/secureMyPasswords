@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.securemypasswords.secureMyPasswords.passwordListActivity.PasswordListActivity;
 import com.securemypasswords.secureMyPasswords.passwordsStorage.AppElements;
@@ -23,10 +22,13 @@ import javax.crypto.BadPaddingException;
 
 public class unlock_storage extends AppCompatActivity {
 
+    EditText passwordView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unlock_storage);
+        passwordView = findViewById(R.id.et_login_password);
         String s = getIntent().getStringExtra("PASSWORD");
         ArrayList<AppElements> elements = unlockPasswordFile(s);
         if(elements != null){
@@ -62,6 +64,7 @@ public class unlock_storage extends AppCompatActivity {
 
 
     private ArrayList<AppElements> unlockPasswordFile(String password){
+        passwordView.setError(null);
         CryptManager cryptManager = new CryptManager("AES");
         ArrayList<AppElements> dataObjects = null;
         try {
@@ -83,7 +86,8 @@ public class unlock_storage extends AppCompatActivity {
             e.printStackTrace();
         } catch (Exception e) {
             if(e instanceof InvalidKeyException || e instanceof  BadPaddingException){
-                Toast.makeText(getApplicationContext(),"The password is wrong",Toast.LENGTH_LONG).show();
+                passwordView.setError(getApplicationContext().getString(R.string.error_incorrect_password));
+                passwordView.requestFocus();
             }
         }
         return dataObjects;

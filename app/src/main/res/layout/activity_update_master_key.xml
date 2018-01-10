@@ -1,41 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_updateMasterKey_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.securemypasswords.secureMyPasswords.passwordListActivity.PasswordListActivity">
 
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_oldPassword_updateMasterKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/oldPassword"
+            android:inputType="text|textPassword" />
+    </android.support.design.widget.TextInputLayout>
+
     <TextView
-        android:id="@+id/tv_passwordStrength_changePassword"
+        android:id="@+id/tv_passwordStrength_updateMasterKey"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:passwordToggleEnabled="true">
+        android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/et_newPassword_changePassword"
+            android:id="@+id/et_newPassword_updateMasterKey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/prompt_password"
-            android:inputType="textPassword" />
+            android:hint="@string/newPassword"
+            android:inputType="text|textPassword" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:passwordToggleEnabled="true">
+        android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/et_confirmNewPassword_changePassword"
+            android:id="@+id/et_confirmNewPassword_updateMasterKey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_confirmPassword"
-            android:inputType="textPassword" />
+            android:inputType="text|textPassword" />
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

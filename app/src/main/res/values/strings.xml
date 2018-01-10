@@ -10,7 +10,7 @@
     <string name="prompt_email">email</string>
     <string name="action_sign_in">Sign in</string>
     <string name="error_invalid_email">This email is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_toShort_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="confirm">Confirm</string>
@@ -51,10 +51,10 @@
     <string name="password_generator">Password Generator</string>
 
     <!-- ManagePassword -->
-    <string name="managePasswordURL">URL :</string>
-    <string name="managePasswordName">Name :</string>
-    <string name="managePasswordPassword">Password :</string>
-    <string name="managePasswordNotes">Notes :</string>
+    <string name="managePasswordURL_hint">URL</string>
+    <string name="managePasswordName_hint">Name</string>
+    <string name="managePasswordPassword_hint">Password</string>
+    <string name="managePasswordNotes_hint">Notes</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -72,5 +72,8 @@
     <string name="newPassword">new Password</string>
     <string name="save">Save</string>
     <string name="change_password">Update master key</string>
+    <string name="error_titleIsEmpty">The title cannot be empty</string>
+    <string name="copiedToClipBoard">Copied to clipboard!</string>
+    <string name="tipsUpdatePassword">Do long click to update the password</string>
 
 </resources>

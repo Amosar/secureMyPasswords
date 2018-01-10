@@ -104,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity implements authActivity 
         View focusView = null;
 
         if (!TextUtils.isEmpty(password) && !SetupPassword.validThePassword(mPasswordView, mConfirmPasswordView)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+            mPasswordView.setError(getString(R.string.error_toShort_password));
             focusView = mPasswordView;
             cancel = true;
         }
