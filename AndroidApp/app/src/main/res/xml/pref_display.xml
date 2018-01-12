@@ -1,0 +1,24 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.jrummyapps.android.colorpicker.ColorPreference
+        android:defaultValue="@color/backgroundColor"
+        android:key="background_color"
+        android:title="@string/pref_background_color" />
+
+    <com.jrummyapps.android.colorpicker.ColorPreference
+        android:defaultValue="@color/secondaryColor"
+        android:key="ui_elements_color"
+        android:title="@string/pref_ui_elements_color" />
+
+
+    <com.jrummyapps.android.colorpicker.ColorPreference
+        android:defaultValue="@color/primaryTextColor"
+        android:key="important_text_color"
+        android:title="@string/pref_importantText_color" />
+
+    <com.jrummyapps.android.colorpicker.ColorPreference
+        android:defaultValue="@color/secondaryTextColor"
+        android:key="secondary_text_color"
+        android:title="@string/pref_secondaryText_color" />
+
+</PreferenceScreen>
