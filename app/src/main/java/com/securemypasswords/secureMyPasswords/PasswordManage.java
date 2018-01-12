@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,20 +68,10 @@ public class PasswordManage extends AppCompatActivity {
         password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("text", password.getText().toString());
-                clipboardManager.setPrimaryClip(clipData);
-                Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.copiedToClipBoard) + "\n"
-                        + getApplicationContext().getString(R.string.tipsUpdatePassword), Toast.LENGTH_LONG).show();
-            }
-        });
-        password.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
                 final AlertDialog.Builder builder = new AlertDialog.Builder(PasswordManage.this);
                 builder.setTitle("Change the Password");
 
-                View view = LayoutInflater.from(PasswordManage.this).inflate(R.layout.activity_change_password, activity_passwordManage, false);
+                View view = LayoutInflater.from(PasswordManage.this).inflate(R.layout.dialog_change_password, activity_passwordManage, false);
                 builder.setView(view);
 
                 final TextView passwordStrengthIndicator = view.findViewById(R.id.tv_passwordStrength_changePassword);
@@ -125,15 +116,25 @@ public class PasswordManage extends AppCompatActivity {
                 });
 
                 alertDialog.show();
-
-
+            }
+        });
+        password.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("text", password.getText().toString());
+                if (clipboardManager != null) {
+                    clipboardManager.setPrimaryClip(clipData);
+                    Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.copiedToClipBoard), Toast.LENGTH_LONG).show();
+                }
                 return true;
             }
         });
     }
 
     private void initFollowUrlListener() {
-        Button bt = findViewById(R.id.bt_passManage_url);
+
+        ImageButton bt = findViewById(R.id.bt_passManage_url);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -73,7 +73,23 @@
     <string name="save">Save</string>
     <string name="change_password">Update master key</string>
     <string name="error_titleIsEmpty">The title cannot be empty</string>
-    <string name="copiedToClipBoard">Copied to clipboard!</string>
-    <string name="tipsUpdatePassword">Do long click to update the password</string>
+    <string name="copiedToClipBoard">Password copied to clipboard!</string>
+    <string name="change_master_key_dialog_title">Change master key</string>
+    <string name="syncPasswordWithServer">Synchronize passwords with server</string>
+    <string name="last_local_update">Last local file update :</string>
+    <string name="last_remote_update">Last remote update :</string>
+    <string name="pull_remote_passwords">Pull remote passwords</string>
+    <string name="push_local_passwords">Push local passwords</string>
+    <string name="cancel">Cancel</string>
+    <string name="finish">Finish</string>
+    <string name="logOut">Log out</string>
+    <string name="select_online_account_again">To synchronize your password select Online storage again</string>
+    <string name="link_to_url">Link to URL</string>
+    <string name="sync_action_tooltip">Select the action that you want to perform:</string>
+    <string name="loginWithoutApiKey">Error: The server haven\'t send authKey</string>
+    <string name="turnOnNetwork">You need an internet connection to do that</string>
+    <string name="internet_permission_error">This feature need internet permissions</string>
+    <string name="server_answer_error">Error in server answer please try again later!</string>
+    <string name="title_activity_password_download_manager">PasswordDownloadManager</string>
 
 </resources>

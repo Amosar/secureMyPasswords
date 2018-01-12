@@ -3,6 +3,11 @@ package com.securemypasswords.secureMyPasswords.passwordListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -27,22 +32,37 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.securemypasswords.secureMyPasswords.AppRequestVariables;
 import com.securemypasswords.secureMyPasswords.PasswordManage;
 import com.securemypasswords.secureMyPasswords.R;
-import com.securemypasswords.secureMyPasswords.account.ManageStorage;
+import com.securemypasswords.secureMyPasswords.account.LoginActivity;
 import com.securemypasswords.secureMyPasswords.passwordsStorage.AppElements;
 import com.securemypasswords.secureMyPasswords.passwordsStorage.FileParser;
+import com.securemypasswords.secureMyPasswords.passwordsStorage.PasswordsUpload;
 import com.securemypasswords.secureMyPasswords.secure.CryptManager;
 import com.securemypasswords.secureMyPasswords.secure.SetupPassword;
 import com.securemypasswords.secureMyPasswords.settings.SettingsActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PasswordListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +79,11 @@ public class PasswordListActivity extends AppCompatActivity
     private LinearLayout subFabEntry, subFabGroup;
     private Animation fabOpen, fabClose, rotateForward, rotateBackward;
     private boolean isOpen = false;
+
+    private RequestQueue requestQueue;
+
+    private String defaultURL = "https://maxime-cassina.pro/private/projects/secureMyPasswords/v1";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +118,8 @@ public class PasswordListActivity extends AppCompatActivity
 
         initRecyclerView();
 
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+
         activityMainLayout = findViewById(R.id.dl_passwordList_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, activityMainLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -105,6 +132,12 @@ public class PasswordListActivity extends AppCompatActivity
         initAddPasswordListener();
         initAddGroupListener();
     }
+
+    /* //TODO Add search bar
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.password_list, menu);
+        return true;
+    }*/
 
     private void initRecyclerView() {
         RecyclerView mRecyclerView = findViewById(R.id.rv_passwordList);
@@ -153,64 +186,19 @@ public class PasswordListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_onlineStorage) {
-            Intent intent = new Intent(this, ManageStorage.class);
-            startActivity(intent);
-            //Toast.makeText(getApplicationContext(),"Not implemented yet",Toast.LENGTH_LONG).show();
+            SharedPreferences authPref = getSharedPreferences("auth", Context.MODE_PRIVATE);
+            String authKey = authPref.getString("apiKey", null);
+            if (authKey == null) {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            } else {
+                openSyncWithServerDialog();
+            }
         } else if (id == R.id.nav_passGenerator) {
             //TODO add password generator
-            Toast.makeText(getApplicationContext(),"Not implemented yet",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.not_implemented), Toast.LENGTH_LONG).show();
         } else if (id == R.id.nav_updateMasterKey) {
-            final Builder builder = new Builder(PasswordListActivity.this);
-            builder.setTitle("Change master key");
-
-            View view = LayoutInflater.from(this).inflate(R.layout.activity_update_master_key, activityMainLayout, false);
-
-            builder.setView(view);
-
-            final EditText oldPassword = view.findViewById(R.id.et_oldPassword_updateMasterKey);
-            final TextView passwordStrengthIndicator = view.findViewById(R.id.tv_passwordStrength_updateMasterKey);
-            final EditText newPassword = view.findViewById(R.id.et_newPassword_updateMasterKey);
-            final EditText confirmNewPassword = view.findViewById(R.id.et_confirmNewPassword_updateMasterKey);
-
-            TextWatcher watcher = SetupPassword.getPasswordTextWatcher(getApplicationContext(),newPassword,passwordStrengthIndicator,confirmNewPassword);
-            newPassword.addTextChangedListener(watcher);
-
-            builder.setPositiveButton("OK", null);
-
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
-
-            final AlertDialog alertDialog = builder.create();
-
-            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-                @Override
-                public void onShow(final DialogInterface dialog) {
-
-                    Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                    b.setOnClickListener(new View.OnClickListener() {
-
-                        @Override
-                        public void onClick(View view) {
-                            if(oldPassword.getText().toString().equals(password)) {
-                                if (SetupPassword.validThePassword(newPassword, confirmNewPassword)) {
-                                    password = newPassword.getText().toString();
-                                    updateElements();
-                                    dialog.dismiss();
-                                }
-                            }else{
-                                oldPassword.setError("Wrong Password");
-                            }
-                        }
-                    });
-                }
-            });
-
-            alertDialog.show();
+            openChangeMasterKeyDialog();
 
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
@@ -222,6 +210,190 @@ public class PasswordListActivity extends AppCompatActivity
         return true;
     }
 
+    private void openSyncWithServerDialog() {
+        final Builder builder = new Builder(PasswordListActivity.this);
+        builder.setTitle(getString(R.string.syncPasswordWithServer));
+
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_sync_passwords_with_server, activityMainLayout, false);
+        builder.setView(view);
+
+        final TextView lastLocalUpdate = view.findViewById(R.id.tv_lastLocalUpdate_value);
+        final TextView lastRemoteUpdate = view.findViewById(R.id.tv_lastRemoteUpdate_passwordSync_value);
+
+        fetchLastRemoteUpdate(lastRemoteUpdate);
+
+        final RadioButton pullRemotePasswords = view.findViewById(R.id.rb_pullLocalPasswords_syncServer);
+        final RadioButton pushRemotePasswords = view.findViewById(R.id.rb_pushLocalPasswords_syncServer);
+        File file = new File(getApplicationContext().getFilesDir(), "securedMyPassword.smp");
+        long lastModified = file.lastModified();
+
+        String dateString = DateFormat.getDateTimeInstance().format(new Date(lastModified));
+        lastLocalUpdate.setText(dateString);
+
+        builder.setNeutralButton(getString(R.string.logOut), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences authPref = getSharedPreferences("auth", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = authPref.edit();
+                editor.putString("apiKey", null);
+                editor.apply();
+                editor.commit();
+                dialog.dismiss();
+            }
+        });
+
+        builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (pushRemotePasswords.isChecked()) {
+                    PasswordsUpload passwordsUpload = new PasswordsUpload(PasswordListActivity.this);
+                    passwordsUpload.execute();
+                } else if (pullRemotePasswords.isChecked()) {
+                    Toast.makeText(getApplicationContext(), getString(R.string.not_implemented), Toast.LENGTH_LONG).show();
+
+                    //PasswordDownload passwordDownload = new PasswordDownload(PasswordListActivity.this);
+                    //passwordDownload.execute();
+                }
+
+                dialog.dismiss();
+            }
+        });
+
+
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        final AlertDialog alertDialog = builder.create();
+
+        alertDialog.show();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getColor(R.color.logoutButton));
+        } else {
+            alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(Color.RED);
+        }
+
+
+    }
+
+    private void fetchLastRemoteUpdate(final TextView lastRemoteUpdate) {
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                defaultURL + "/getLastUpdateDateOfPasswordFile", new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    boolean resultSuccess = !jsonObject.getBoolean("error");
+                    if (resultSuccess) {
+                        if (jsonObject.has("lastUpdate")) {
+                            long lastRemoteModification = jsonObject.getLong("lastUpdate");
+
+                            String dateString = DateFormat.getDateTimeInstance().format(new Date(lastRemoteModification * 1000));
+                            lastRemoteUpdate.setText(dateString);
+                        } else {
+                            lastRemoteUpdate.setText(getString(R.string.error));
+
+                        }
+                    } else {
+                        if (jsonObject.has("message")) {
+                            lastRemoteUpdate.setText(jsonObject.getString("message"));
+                        }
+                    }
+                } catch (JSONException e) {
+                    lastRemoteUpdate.setText(getString(R.string.server_answer_error));
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                if (connMgr != null) {
+                    NetworkInfo activeNetworkInfo = connMgr.getActiveNetworkInfo();
+                    if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+                        if (error.getCause() != null) {
+                            Toast.makeText(getApplicationContext(), error.getCause().getMessage(), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.turnOnNetwork), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<>();
+                SharedPreferences authSetting = getApplicationContext().getSharedPreferences("auth", 0);
+                String apiKey = authSetting.getString("apiKey", null);
+                params.put("Auth", apiKey);
+                return params;
+            }
+        };
+        requestQueue.add(strReq);
+    }
+
+    private void openChangeMasterKeyDialog() {
+        final Builder builder = new Builder(PasswordListActivity.this);
+        builder.setTitle(getString(R.string.change_master_key_dialog_title));
+
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_update_master_key, activityMainLayout, false);
+        builder.setView(view);
+
+        final EditText oldPassword = view.findViewById(R.id.et_oldPassword_updateMasterKey);
+        final TextView passwordStrengthIndicator = view.findViewById(R.id.tv_passwordStrength_updateMasterKey);
+        final EditText newPassword = view.findViewById(R.id.et_newPassword_updateMasterKey);
+        final EditText confirmNewPassword = view.findViewById(R.id.et_confirmNewPassword_updateMasterKey);
+
+        TextWatcher watcher = SetupPassword.getPasswordTextWatcher(getApplicationContext(), newPassword, passwordStrengthIndicator, confirmNewPassword);
+        newPassword.addTextChangedListener(watcher);
+
+        builder.setPositiveButton("OK", null);
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        final AlertDialog alertDialog = builder.create();
+
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(final DialogInterface dialog) {
+
+                Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        if (oldPassword.getText().toString().equals(password)) {
+                            if (SetupPassword.validThePassword(newPassword, confirmNewPassword)) {
+                                password = newPassword.getText().toString();
+                                updateElements();
+                                dialog.dismiss();
+                            }
+                        } else {
+                            oldPassword.setError(getString(R.string.error_incorrect_password));
+                        }
+                    }
+                });
+            }
+        });
+
+        alertDialog.show();
+    }
+
     //Todo Implement this (group with multiple levels)
     private void initAddGroupListener() {
         FloatingActionButton passwordFab = findViewById(R.id.fab_passwordList_addGroup);
@@ -230,7 +402,7 @@ public class PasswordListActivity extends AppCompatActivity
             public void onClick(View v) {
                 animatedFab();
 
-                Toast.makeText(getApplicationContext(),"Not implemented yet",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.not_implemented), Toast.LENGTH_LONG).show();
                 /*AlertDialog.Builder builder = new AlertDialog.Builder(PasswordListActivity.this);
                 builder.setTitle("Name of the Group");
 

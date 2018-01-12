@@ -1,49 +1,28 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sv_register_form"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.securemypasswords.secureMyPasswords.account.RegisterActivity">
 
-    <!-- Login progress -->
-    <ProgressBar
-        android:id="@+id/register_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/iv_lock_register"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:contentDescription="@string/cadena"
-        android:paddingTop="50dp"
-        android:src="@drawable/lock" />
-
-    <TextView
-        android:id="@+id/tv_welcome_register"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="20dp"
-        android:text="@string/register_msg"
-        android:textColor="@color/primaryTextColor"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <ScrollView
-        android:id="@+id/sv_register_form"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
+        <ProgressBar
+            android:id="@+id/register_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_register_form"
@@ -51,15 +30,39 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/iv_lock_register"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:contentDescription="@string/cadena"
+                android:paddingTop="50dp"
+                android:src="@drawable/lock" />
 
-            <EditText
-                android:id="@+id/et_email_register"
+            <TextView
+                android:id="@+id/tv_welcome_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:singleLine="true" />
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:text="@string/register_msg"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_email_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </android.support.design.widget.TextInputLayout>
 
             <TextView
                 android:id="@+id/et_setup_passwordStrength"
@@ -113,7 +116,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/loginFromRegister"
                 android:textStyle="bold" />
-
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -3,6 +3,7 @@
     package="com.securemypasswords.secureMyPasswords">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="false"
@@ -11,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.securemypasswords.secureMyPasswords.SplashActivity"
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,18 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.securemypasswords.secureMyPasswords.SetupActivity" />
-        <activity android:name="com.securemypasswords.secureMyPasswords.account.LoginActivity" />
+        <activity android:name=".SetupActivity" />
+        <activity android:name=".account.LoginActivity" />
         <activity
-            android:name="com.securemypasswords.secureMyPasswords.passwordListActivity.PasswordListActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name="com.securemypasswords.secureMyPasswords.unlock_storage" />
-        <activity android:name="com.securemypasswords.secureMyPasswords.PasswordManage" />
+            android:name=".passwordListActivity.PasswordListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".unlock_storage" />
+        <activity android:name=".PasswordManage" />
         <activity
-            android:name="com.securemypasswords.secureMyPasswords.settings.SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name="com.securemypasswords.secureMyPasswords.account.RegisterActivity" />
-        <activity android:name="com.securemypasswords.secureMyPasswords.account.ManageStorage" />
+        <activity android:name=".account.RegisterActivity" />
     </application>
 
 </manifest>

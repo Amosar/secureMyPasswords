@@ -6,7 +6,7 @@
     <color name="secondaryColor">#80cbc4</color>
     <color name="secondaryLightColor">#484848</color>
     <color name="secondaryDarkColor">#000000</color>
-    <color name="testError">#ff00cc</color>
+    <color name="testError">#d500f9</color>
 
 
     <color name="backgroundColor">#263238</color>
@@ -18,9 +18,12 @@
     <color name="white">#ffffff</color>
 
     <!-- password strength -->
-    <color name="EASY">#ff0004</color>
-    <color name="MEDIUM">#f18017</color>
-    <color name="STRONG">#319f10</color>
-    <color name="STRONGEST">#7ef475</color>
+    <color name="EASY">#d50000</color>
+    <color name="MEDIUM">#f57f17</color>
+    <color name="STRONG">#388e3c</color>
+    <color name="STRONGEST">#81c784</color>
+
+    <color name="logoutButton">#d50000</color>
+    <color name="errorSnackBarText">#d50000</color>
 
 </resources>
