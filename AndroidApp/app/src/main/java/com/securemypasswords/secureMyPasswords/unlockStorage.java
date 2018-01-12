@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 import javax.crypto.BadPaddingException;
 
-public class unlock_storage extends AppCompatActivity {
+public class unlockStorage extends AppCompatActivity {
 
     EditText passwordView;
 
@@ -51,7 +51,7 @@ public class unlock_storage extends AppCompatActivity {
                 String password = passwordView.getText().toString();
                 ArrayList<AppElements> elements = unlockPasswordFile(password);
                 if(elements != null){
-                    Intent intent = new Intent(unlock_storage.this, PasswordListActivity.class);
+                    Intent intent = new Intent(unlockStorage.this, PasswordListActivity.class);
                     intent.putExtra("ELEMENTS", elements);
                     intent.putExtra("PASSWORD", password);
                     startActivity(intent);

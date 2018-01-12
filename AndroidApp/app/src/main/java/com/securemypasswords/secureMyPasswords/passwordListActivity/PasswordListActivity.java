@@ -88,7 +88,7 @@ public class PasswordListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_password_list);
         Intent intent = getIntent();
         password = intent.getStringExtra("PASSWORD");
@@ -378,7 +378,7 @@ public class PasswordListActivity extends AppCompatActivity
                     @Override
                     public void onClick(View view) {
                         if (oldPassword.getText().toString().equals(password)) {
-                            if (SetupPassword.validThePassword(newPassword, confirmNewPassword)) {
+                            if (SetupPassword.validThePassword(getApplicationContext(), newPassword, confirmNewPassword)) {
                                 password = newPassword.getText().toString();
                                 updateElements();
                                 dialog.dismiss();

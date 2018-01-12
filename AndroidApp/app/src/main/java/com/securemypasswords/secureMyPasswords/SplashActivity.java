@@ -15,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Intent intent;
         if (file.exists()) {
-            intent = new Intent(this, unlock_storage.class);
+            intent = new Intent(this, unlockStorage.class);
         } else {
             intent = new Intent(this, SetupActivity.class);
         }

@@ -109,6 +109,9 @@ public class PasswordManage extends AppCompatActivity {
                                 if (newPassword.getText().toString().equals(confirmNewPassword.getText().toString())) {
                                     password.setText(newPassword.getText().toString());
                                     dialog.dismiss();
+                                }else{
+                                    newPassword.setError(getString(R.string.password_not_match_error));
+                                    confirmNewPassword.setError(getString(R.string.password_not_match_error));
                                 }
                             }
                         });

@@ -8,7 +8,6 @@
         android:id="@+id/sv_form_setup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bt_setup_onlineAccount"
         android:layout_alignParentTop="true">
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -81,12 +80,12 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
+    <!--<Button
         android:id="@+id/bt_setup_onlineAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/not_implemented"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold" />-->
 </RelativeLayout>

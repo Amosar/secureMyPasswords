@@ -124,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        if (!TextUtils.isEmpty(password) && !SetupPassword.validThePassword(mPasswordView, mConfirmPasswordView)) {
+        if (!TextUtils.isEmpty(password) && !SetupPassword.validThePassword(getApplicationContext(),mPasswordView, mConfirmPasswordView)) {
             mPasswordView.setError(getString(R.string.error_toShort_password));
             focusView = mPasswordView;
             cancel = true;
@@ -168,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
                             mEmailView.setError(errorMessage);
                             mEmailView.requestFocus();
                         } else {
-                            Snackbar.make(findViewById(R.id.sv_login_form), errorMessage, Snackbar.LENGTH_INDEFINITE).show();
+                            Snackbar.make(findViewById(R.id.sv_register_form), errorMessage, Snackbar.LENGTH_INDEFINITE).show();
                         }
                         showProgress(false);
                     }
@@ -197,7 +197,7 @@ public class RegisterActivity extends AppCompatActivity {
         }) {
             @Override
             protected Map<String, String> getParams() {
-                // Posting parameters to login url
+                // Posting parameters to register url
                 Map<String, String> params = new HashMap<>();
                 params.put("email", email);
                 params.put("password", password);

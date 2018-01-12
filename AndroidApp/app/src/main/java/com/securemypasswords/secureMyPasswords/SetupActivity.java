@@ -49,7 +49,7 @@ public class SetupActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
 
-                if(SetupPassword.validThePassword(mPasswordView,mConfirmPasswordView)) {
+                if(SetupPassword.validThePassword(getApplicationContext(),mPasswordView,mConfirmPasswordView)) {
                     try {
                         initPasswordFile();
                         runPasswordListActivity();
@@ -72,7 +72,7 @@ public class SetupActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(SetupPassword.validThePassword(mPasswordView,mConfirmPasswordView)) {
+                if(SetupPassword.validThePassword(getApplicationContext(),mPasswordView,mConfirmPasswordView)) {
                     try {
                         initPasswordFile();
                         runPasswordListActivity();
@@ -111,7 +111,7 @@ public class SetupActivity extends AppCompatActivity {
 
 
     private void runPasswordListActivity(){
-        Intent intent = new Intent(this, unlock_storage.class);
+        Intent intent = new Intent(this, unlockStorage.class);
         intent.putExtra("PASSWORD", mPasswordView.getText().toString());
         startActivity(intent);
         finish();

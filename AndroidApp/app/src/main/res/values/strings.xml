@@ -91,5 +91,8 @@
     <string name="internet_permission_error">This feature need internet permissions</string>
     <string name="server_answer_error">Error in server answer please try again later!</string>
     <string name="title_activity_password_download_manager">PasswordDownloadManager</string>
+    <string name="tooSmall_password_error">The password is to small</string>
+    <string name="password_not_match_error">The two passwords does not match</string>
+    <string name="wrongLogin">your login or password is wrong</string>
 
 </resources>

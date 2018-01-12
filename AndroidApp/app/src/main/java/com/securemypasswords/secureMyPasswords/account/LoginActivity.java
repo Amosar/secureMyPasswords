@@ -161,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !SetupPassword.validThePassword(mPasswordView, mPasswordView)) {
+        if (!TextUtils.isEmpty(password) && !SetupPassword.validThePassword(getApplicationContext(), mPasswordView, mPasswordView)) {
             cancel = true;
         }
 
@@ -222,7 +222,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (connMgr != null) {
                     NetworkInfo activeNetworkInfo = connMgr.getActiveNetworkInfo();
                     if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
-                        Snackbar.make(findViewById(R.id.sv_login_form), error.getCause().getMessage(), Snackbar.LENGTH_INDEFINITE).show();
+                        if(error.getCause() == null){
+                            mEmailView.setError(getString(R.string.wrongLogin));
+                        }else{
+                            Snackbar.make(findViewById(R.id.sv_login_form), error.getCause().getMessage(), Snackbar.LENGTH_INDEFINITE).show();
+                        }
                     } else {
                         Snackbar.make(findViewById(R.id.sv_login_form), getString(R.string.turnOnNetwork), Snackbar.LENGTH_INDEFINITE).show();
 

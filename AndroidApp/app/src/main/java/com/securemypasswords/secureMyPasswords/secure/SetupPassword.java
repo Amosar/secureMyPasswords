@@ -76,17 +76,17 @@ public class SetupPassword {
         };
     }
 
-    public static boolean validThePassword(EditText mPasswordView, EditText mConfirmPasswordView) {
+    public static boolean validThePassword(final Context context, EditText mPasswordView, EditText mConfirmPasswordView) {
         final String password = mPasswordView.getText().toString();
         final String confirmPassword = mConfirmPasswordView.getText().toString();
         boolean cancel = false;
         if(password.length() < 6 || SetupPassword.getRating(password)<1){
-            mPasswordView.setError("The password is to small");
+            mPasswordView.setError(context.getString(R.string.tooSmall_password_error));
             mPasswordView.requestFocus();
             cancel = true;
         }else if(!password.equals(confirmPassword)){
-            mPasswordView.setError("The two password does not match");
-            mConfirmPasswordView.setError("The two password does not match");
+            mPasswordView.setError(context.getString(R.string.password_not_match_error));
+            mConfirmPasswordView.setError(context.getString(R.string.password_not_match_error));
             mConfirmPasswordView.requestFocus();
             cancel = true;
         }
